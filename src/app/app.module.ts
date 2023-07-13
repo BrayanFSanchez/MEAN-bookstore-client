@@ -16,6 +16,7 @@ import { LoginComponent } from './security/login/login.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BarComponent } from './navigation/bar/bar.component';
 import { ListComponent } from './navigation/list/list.component';
+import { SecurityService } from './security/security.service';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,7 @@ import { ListComponent } from './navigation/list/list.component';
     MaterialModule,
     FlexLayoutModule,
   ],
-  providers: [BooksService],
+  providers: [BooksService, SecurityService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
