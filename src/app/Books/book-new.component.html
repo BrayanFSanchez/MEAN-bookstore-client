@@ -1,0 +1,79 @@
+<h2 mat-dialog-title>Agregar nuevo libro</h2>
+<mat-dialog-content>
+  <section fxLayoutAlign="center" style="margin-top: 10px; margin-bottom: 10px">
+    <mat-card fxFlex="100%">
+      <form
+        fxLayout="column"
+        fxLayoutAlign="center center"
+        fxLayoutGap="10px"
+        #f="ngForm"
+        (ngSubmit)="saveBook(f)"
+      >
+        <mat-form-field style="width: 100%">
+          <mat-label>Título</mat-label>
+          <input
+            type="text"
+            matInput
+            placeholder="Nombre del libro"
+            name="title"
+            ngModel
+            required
+          />
+          <mat-error>Debe ingresar el título del libro</mat-error>
+        </mat-form-field>
+
+        <mat-form-field style="width: 100%">
+          <mat-label>Descripción</mat-label>
+          <input
+            type="text"
+            matInput
+            placeholder="Descripción del libro"
+            name="description"
+            ngModel
+            required
+          />
+          <mat-error>Debe ingresar la descripción del libro</mat-error>
+        </mat-form-field>
+
+        <mat-form-field style="width: 100%">
+          <mat-label>Precio</mat-label>
+          <input
+            type="text"
+            matInput
+            placeholder="Precio del libro"
+            name="description"
+            ngModel
+            required
+          />
+          <mat-error>Debe ingresar la precio del libro</mat-error>
+        </mat-form-field>
+
+        <mat-form-field style="width: 100%">
+          <mat-label>Seleccione un autor</mat-label>
+          <mat-select [(ngModel)]="selectAuthor" name="author">
+            <mat-option value="1">Brayan Sanchez</mat-option>
+            <mat-option value="2">Carlitos Galvez</mat-option>
+            <mat-option value="2">Mariana Cruz</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field style="width: 100%">
+          <input
+            matInput
+            placeholder="Selecione la fecha de publicación"
+            [matDatepicker]="picker"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </form>
+    </mat-card>
+  </section>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close>Cerrar</button>
+  <button mat-button>Guardar</button>
+</mat-dialog-actions>

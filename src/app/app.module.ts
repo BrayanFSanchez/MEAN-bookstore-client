@@ -5,9 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { UserComponent } from './user.component';
 import { FormsModule } from '@angular/forms';
-import { BooksComponent } from './Books/books.component';
-import { BookComponent } from './Book/book.component';
-import { BooksService } from './services/books.service';
 import { HomeComponent } from './home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
@@ -17,18 +14,22 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { BarComponent } from './navigation/bar/bar.component';
 import { ListComponent } from './navigation/list/list.component';
 import { SecurityService } from './security/security.service';
+import { BooksComponent } from './books/books.component';
+import { BooksService } from './books/books.service';
+import { BookNewComponent } from './books/book-new.component';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 
 @NgModule({
   declarations: [
     AppComponent,
     UserComponent,
-    BooksComponent,
-    BookComponent,
     HomeComponent,
     RegisterComponent,
     LoginComponent,
     BarComponent,
     ListComponent,
+    BooksComponent,
+    BookNewComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,7 +39,11 @@ import { SecurityService } from './security/security.service';
     MaterialModule,
     FlexLayoutModule,
   ],
-  providers: [BooksService, SecurityService],
+  providers: [
+    SecurityService,
+    BooksService,
+    { provide: MAT_DATE_LOCALE, useValue: 'es-Es' },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -1,11 +1,47 @@
-<h1>Mis libros favoritos</h1>
-<form (ngSubmit)="saveBook(f)" #f="ngForm">
-  <input type="text" name="bookName" ngModel required />
-  <button type="submit">Agregar libro</button>
-</form>
+<div fxLayoutAlign="center center">
+  <mat-form-field fxFlex="60%">
+    <input
+      matInput
+      type="text"
+      (keyup)="makeFilter($event)"
+      placeholder="Ingrese texto"
+    />
+  </mat-form-field>
+</div>
 
-<app-book
-  (bookClicked)="deleteBook(book)"
-  *ngFor="let book of books"
-  [bookTitle]="book"
-></app-book>
+<mat-table [dataSource]="dataSource" matSort>
+  <ng-container matColumnDef="title">
+    <mat-header-cell *matHeaderCellDef mat-sort-header=""
+      >Título</mat-header-cell
+    >
+    <mat-cell *matCellDef="let element">{{ element.title }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="description">
+    <mat-header-cell *matHeaderCellDef mat-sort-header
+      >Descripción</mat-header-cell
+    >
+    <mat-cell *matCellDef="let element">{{ element.description }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="author">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Autor</mat-header-cell>
+    <mat-cell *matCellDef="let element">{{ element.author }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="price">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Precio</mat-header-cell>
+    <mat-cell *matCellDef="let element">{{ element.price }}</mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="columsDeployment">
+    <mat-row *matRowDef="let row; columns: columsDeployment"></mat-row>
+  </mat-header-row>
+</mat-table>
+
+<mat-paginator [pageSize]="5" [pageSizeOptions]="[1, 5, 10, 20]">
+</mat-paginator>
+
+<button mat-fab id="add-button" color="warn" (click)="openDialog()">
+  <mat-icon>add</mat-icon>
+</button>
