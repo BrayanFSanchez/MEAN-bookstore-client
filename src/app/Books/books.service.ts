@@ -1,4 +1,5 @@
 import { Books } from './books.model';
+import { Subject } from 'rxjs';
 
 export class BooksService {
   private booksList: Books[] = [
@@ -39,7 +40,14 @@ export class BooksService {
     },
   ];
 
+  bookSubject = new Subject<Books>();
+
   getBooks() {
     return this.booksList.slice();
+  }
+
+  saveBook(book: Books) {
+    this.booksList.push(book);
+    this.bookSubject.next(book);
   }
 }

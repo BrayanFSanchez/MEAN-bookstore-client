@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { UserComponent } from './user.component';
+
 import { FormsModule } from '@angular/forms';
 import { HomeComponent } from './home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -18,11 +18,11 @@ import { BooksComponent } from './books/books.component';
 import { BooksService } from './books/books.service';
 import { BookNewComponent } from './books/book-new.component';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { AuthorsComponent } from './authors/authors.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    UserComponent,
     HomeComponent,
     RegisterComponent,
     LoginComponent,
@@ -30,6 +30,7 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
     ListComponent,
     BooksComponent,
     BookNewComponent,
+    AuthorsComponent,
   ],
   imports: [
     BrowserModule,
