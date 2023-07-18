@@ -1,32 +1,30 @@
 import { Author } from './author.model';
 import { Injectable } from '@angular/core';
+import { enviroment } from '../../environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthorsService {
-  private authorsList: Author[] = [
-    {
-      authorId: 1,
-      name: 'Brayan',
-      lastname: 'Sanchez',
-      academicDegree: 'Ingeniero en Sistemas',
-    },
-    {
-      authorId: 1,
-      name: 'Karina',
-      lastname: 'Lopez',
-      academicDegree: 'Matematica',
-    },
-    {
-      authorId: 1,
-      name: 'Luisa',
-      lastname: 'Hernandez',
-      academicDegree: 'Ciencias de la computación',
-    },
-  ];
+  baseUrl = enviroment.baseUrl;
+  private authorsList: Author[] = [];
+
+  private authorsSubject = new Subject<Author[]>();
+
+  constructor(private http: HttpClient) {}
 
   getAuthors() {
-    return this.authorsList.slice();
+    this.http
+      .get<Author[]>(`${this.baseUrl}/api/BookstoreAuthor`)
+      .subscribe((data) => {
+        this.authorsList = data;
+        this.authorsSubject.next([...this.authorsList]);
+      });
+  }
+
+  getCurrentListener() {
+    return this.authorsSubject.asObservable();
   }
 }

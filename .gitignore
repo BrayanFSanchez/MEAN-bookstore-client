@@ -43,3 +43,6 @@ Thumbs.db
 
 # Env file
 .env
+
+# Environments
+/src/environments/
