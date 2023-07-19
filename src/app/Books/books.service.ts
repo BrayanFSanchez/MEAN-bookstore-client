@@ -2,7 +2,7 @@ import { Books } from './books.model';
 import { Subject } from 'rxjs';
 import { enviroment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { PaginationBook } from './pagination-books.model';
+import { PaginationBooks } from './pagination-books.model';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -11,12 +11,12 @@ import { Injectable } from '@angular/core';
 export class BooksService {
   baseUrl = enviroment.baseUrl;
 
-  private booksList: Books[] = [];
+  // private booksList: Books[] = [];
 
-  bookSubject = new Subject<Books>();
+  bookSubject = new Subject();
 
-  bookPagination: PaginationBook | null = null;
-  bookPaginationSubject = new Subject<PaginationBook>();
+  bookPagination: PaginationBooks | null = null;
+  bookPaginationSubject = new Subject<PaginationBooks>();
 
   constructor(private http: HttpClient) {}
 
@@ -26,7 +26,7 @@ export class BooksService {
     sort: string,
     sortDirection: string,
     filterValue: any
-  ) {
+  ): void {
     const request = {
       pageSize: booksPerPage,
       page: actualPage,
@@ -36,7 +36,7 @@ export class BooksService {
     };
 
     this.http
-      .post<PaginationBook>(`${this.baseUrl}/api/Book/Pagination`, request)
+      .post<PaginationBooks>(`${this.baseUrl}/api/Book/Pagination`, request)
       .subscribe((response) => {
         this.bookPagination = response;
         this.bookPaginationSubject.next(this.bookPagination);
@@ -48,7 +48,12 @@ export class BooksService {
   }
 
   saveBook(book: Books) {
-    this.booksList.push(book);
-    this.bookSubject.next(book);
+    this.http.post(`${this.baseUrl}/api/Book`, book).subscribe((response) => {
+      this.bookSubject.next('');
+    });
+  }
+
+  saveBookListener() {
+    return this.bookSubject.asObservable();
   }
 }

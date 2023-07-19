@@ -18,15 +18,15 @@
   </ng-container>
 
   <ng-container matColumnDef="description">
-    <mat-header-cell *matHeaderCellDef mat-sort-header
-      >Descripción</mat-header-cell
-    >
+    <mat-header-cell *matHeaderCellDef mat-sort-header>
+      Descripción
+    </mat-header-cell>
     <mat-cell *matCellDef="let element">{{ element.description }}</mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="author">
     <mat-header-cell *matHeaderCellDef mat-sort-header>Autor</mat-header-cell>
-    <mat-cell *matCellDef="let element">{{ element.author }}</mat-cell>
+    <mat-cell *matCellDef="let element">{{ element.author.fullName }}</mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="price">
@@ -39,7 +39,13 @@
   </mat-header-row>
 </mat-table>
 
-<mat-paginator [pageSize]="5" [pageSizeOptions]="[1, 5, 10, 20]">
+<mat-paginator
+  (page)="pagerEvent($event)"
+  #pagination
+  [pageSize]="booksPerPage"
+  [pageSizeOptions]="comboPage"
+  [length]="totalBooks"
+>
 </mat-paginator>
 
 <button mat-fab id="add-button" color="warn" (click)="openDialog()">
