@@ -9,7 +9,11 @@
   </mat-form-field>
 </div>
 
-<mat-table [dataSource]="dataSource" matSort>
+<mat-table
+  [dataSource]="dataSource"
+  matSort
+  (matSortChange)="orderColumn($event)"
+>
   <ng-container matColumnDef="title">
     <mat-header-cell *matHeaderCellDef mat-sort-header=""
       >Título</mat-header-cell

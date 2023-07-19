@@ -21,6 +21,7 @@ import { PaginationBooks } from './pagination-books.model';
   styleUrls: ['./books.component.css'],
 })
 export class BooksComponent implements OnInit, AfterViewInit, OnDestroy {
+  timeout: any = null;
   bookData: Books[] = [];
   columsDeployment = ['title', 'description', 'author', 'price'];
   dataSource = new MatTableDataSource<Books>();
@@ -39,7 +40,7 @@ export class BooksComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(private booksService: BooksService, private dialog: MatDialog) {}
 
-  pagerEvent(event: PageEvent) {
+  pagerEvent(event: PageEvent): void {
     this.booksPerPage = event.pageSize;
     this.actualPage = event.pageIndex + 1;
     this.booksService.getBooks(
@@ -51,14 +52,51 @@ export class BooksComponent implements OnInit, AfterViewInit, OnDestroy {
     );
   }
 
-  makeFilter(filter: Event) {
-    const inputElement = filter.target as HTMLInputElement;
-    const inputValue = inputElement.value;
+  orderColumn(event: { active: string; direction: string }): void {
+    this.sort = event.active;
+    this.sortDirection = event.direction;
 
-    this.dataSource.filter = inputValue;
+    this.booksService.getBooks(
+      this.booksPerPage,
+      this.actualPage,
+      event.active,
+      event.direction,
+      this.filterValue
+    );
   }
 
-  openDialog() {
+  // makeFilter(filter: Event) {
+  //   const inputElement = filter.target as HTMLInputElement;
+  //   const inputValue = inputElement.value;
+
+  //   this.dataSource.filter = inputValue;
+  // }
+
+  makeFilter(event: any): void {
+    clearTimeout(this.timeout);
+    const $this = this;
+
+    this.timeout = setTimeout(() => {
+      if (event.keycode !== 13) {
+        const filterValueLocal = {
+          property: 'title',
+          value: event.target.value,
+        };
+
+        $this.filterValue = filterValueLocal.value;
+
+        $this.booksService.getBooks(
+          $this.booksPerPage,
+          $this.actualPage,
+          $this.sort,
+          $this.sortDirection,
+          filterValueLocal
+        );
+      }
+    }, 1000);
+  }
+
+  openDialog(): void {
     const dialogRef = this.dialog.open(BookNewComponent, {
       width: '550px',
     });
