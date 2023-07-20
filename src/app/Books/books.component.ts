@@ -65,13 +65,6 @@ export class BooksComponent implements OnInit, AfterViewInit, OnDestroy {
     );
   }
 
-  // makeFilter(filter: Event) {
-  //   const inputElement = filter.target as HTMLInputElement;
-  //   const inputValue = inputElement.value;
-
-  //   this.dataSource.filter = inputValue;
-  // }
-
   makeFilter(event: any): void {
     clearTimeout(this.timeout);
     const $this = this;
@@ -121,7 +114,7 @@ export class BooksComponent implements OnInit, AfterViewInit, OnDestroy {
       this.filterValue
     );
 
-    this.booksService
+    this.bookSubscription = this.booksService
       .getCurrentListener()
       .subscribe((pagination: PaginationBooks) => {
         this.dataSource = new MatTableDataSource<Books>(pagination.data);

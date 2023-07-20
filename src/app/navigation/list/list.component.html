@@ -6,6 +6,26 @@
 
   <a
     mat-list-item
+    routerLink="/books"
+    (click)="onCloseMenu()"
+    *ngIf="userStatus"
+  >
+    <mat-icon>import_contacts</mat-icon>
+    <span class="navegacion-list-label">Libros</span>
+  </a>
+
+  <a
+    mat-list-item
+    routerLink="/authors"
+    (click)="onCloseMenu()"
+    *ngIf="userStatus"
+  >
+    <mat-icon>supervisor_account</mat-icon>
+    <span class="navegacion-list-label">Autores</span>
+  </a>
+
+  <a
+    mat-list-item
     routerLink="/register"
     (click)="onCloseMenu()"
     *ngIf="!userStatus"

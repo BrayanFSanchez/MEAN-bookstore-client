@@ -13,12 +13,12 @@ import { LoginComponent } from './security/login/login.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BarComponent } from './navigation/bar/bar.component';
 import { ListComponent } from './navigation/list/list.component';
-import { SecurityService } from './security/security.service';
 import { BooksComponent } from './books/books.component';
 import { BookNewComponent } from './books/book-new.component';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { AuthorsComponent } from './authors/authors.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { SecurityInterceptor } from './security/security-interceptor';
 
 @NgModule({
   declarations: [
@@ -41,7 +41,10 @@ import { HttpClientModule } from '@angular/common/http';
     FlexLayoutModule,
     HttpClientModule,
   ],
-  providers: [SecurityService, { provide: MAT_DATE_LOCALE, useValue: 'es-Es' }],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: SecurityInterceptor, multi: true },
+    { provide: MAT_DATE_LOCALE, useValue: 'es-Es' },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

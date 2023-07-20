@@ -11,8 +11,12 @@ const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [SecurityRouter] },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'books', component: BooksComponent },
-  { path: 'authors', component: AuthorsComponent },
+  { path: 'books', component: BooksComponent, canActivate: [SecurityRouter] },
+  {
+    path: 'authors',
+    component: AuthorsComponent,
+    canActivate: [SecurityRouter],
+  },
 ];
 
 @NgModule({
